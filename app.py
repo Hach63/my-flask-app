@@ -14,7 +14,7 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'YOUR_@'  # Remplacez par votre adresse e-mail
 app.config['MAIL_PASSWORD'] = 'YOUR_PWD'  # Remplacez par votre mot de passe
 app.config['MAIL_DEFAULT_SENDER'] = 'vdk@gmail.com'
-app.secret_key = 'a_123456789'
+app.secret_key = 'PWD'
 
 # Dossier pour sauvegarder les images uploadées
 UPLOAD_FOLDER = 'static/images'
