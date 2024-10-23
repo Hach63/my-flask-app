@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLICK SHOP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"> <!-- CSS pour la recherche d'image -->
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/premium-photo/abstract-graphic-design-featuring-shopping-icons-geometric-shapes_1305385-18135.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .center-image {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar {
+            width: 250px; /* Width of the sidebar */
+            position: fixed; /* Fix it on the left */
+            height: 100%; /* Full height */
+            padding-top: 20px; /* Spacing from the top */
+            background-image: url('https://img.freepik.com/premium-photo/abstract-graphic-design-featuring-shopping-icons-geometric-shapes_1305385-18135.jpg'); /* Background image */
+            background-size: cover; /* Cover the entire sidebar */
+            background-position: center; /* Center the image */
+            color: white; /* White text for better contrast */
+            transition: transform 0.3s ease; /* Smooth transition for opening/closing */
+            transform: translateX(0); /* Sidebar initially visible */
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%); /* Hide the sidebar */
+        }
+
+        .sidebar .navbar-brand {
+            font-size: 1.5rem; /* Size of the brand */
+            color: #ffdd57; /* Custom yellow color for the brand */
+            padding: 10px 20px; /* Padding for the brand */
+            text-align: center; /* Center align the brand */
+            border-radius: 5px; /* Rounded corners */
+            transition: background 0.3s; /* Transition effect */
+        }
+
+        .sidebar .navbar-brand:hover {
+            background: rgba(255, 221, 87, 0.2); /* Hover effect */
+        }
+
+        .sidebar .nav-link {
+            color: #f8f9fa; /* Light color for the links */
+            padding: 10px 20px; /* Padding for the links */
+            transition: background 0.3s, box-shadow 0.3s; /* Transition for hover effect */
+            display: flex; /* Flex for icon and text */
+            align-items: center; /* Center vertically */
+        }
+
+        .sidebar .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1); /* Background on hover */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 10px; /* Space between icon and text */
+        }
+
+        .content {
+            margin-left: 260px; /* Margin to the right of the sidebar */
+            padding: 20px; /* Padding for the content area */
+        }
+
+        .toggle-btn {
+            position: fixed; /* Fix the button */
+            left: 0%; /* Position it to the left */
+            top: 0%; /* Adjust vertical position */
+            z-index: 1000; /* Ensure it is above other elements */
+            background-color: #343a4000; /* Button background */
+            color: white; /* Button text color */
+        }
+       /* Tableau horizontal */
+.horizontal-table {
+    display: flex; /* Activer le mode flex pour aligner les éléments horizontalement */
+    overflow-x: auto; /* Activer le défilement horizontal */
+    padding: 1rem; /* Ajouter un padding autour du tableau */
+    background-color: rgba(255, 255, 255, 0.1); /* Fond transparent */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); /* Ombre portée */
+}
+
+.horizontal-table .card {
+    flex: 0 0 auto; /* Garder chaque élément en ligne sans retour à la ligne */
+    margin-right: 1rem; /* Espacement entre les cartes */
+    background-color: #343a40; /* Couleur de fond pour chaque élément */
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center; /* Centrer le contenu de chaque carte */
+    width: 180px; /* Largeur fixe pour chaque élément */
+}
+
+.horizontal-table img {
+    border-radius: 5px; /* Arrondir les coins des images */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Ombre portée */
+    width: 100%; /* Utiliser toute la largeur de l'élément */
+    height: auto; /* Garder le ratio de l'image */
+    margin-bottom: 10px; /* Espacement en bas de l'image */
+}
+
+.similarity-score {
+    font-weight: bold; /* Mettre en gras le score de similarité */
+    color: #ffc107; /* Couleur du texte du score de similarité */
+    font-size: 1rem; /* Taille de la police */
+}
+
+
+    </style>
+</head>
+<body>
+   <!-- Sidebar Navigation -->
+   <div class="d-flex" style="height: 100vh;">
+    <nav class="bg-dark sidebar" id="sidebar">
+        <div class="container-fluid">
+            <a class="navbar-brand text-light" href="/">
+                <i class="fas fa-tshirt"></i> CLICK SHOP
+            </a>
+            __________________________________
+            <ul class="nav flex-column">
+                
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home"></i> Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/produit">
+                            <i class="fas fa-shopping-bag"></i> Produits
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/contact">
+                            <i class="fas fa-envelope"></i> Contact
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/panier" id="cart-link">
+                            <i class="fas fa-shopping-cart"></i> 
+                            Panier (<span id="cart-count">0</span>)
+                        </a>
+                    </li>
+                </ul>
+        </div>
+    </nav>
+    <div class="content flex-grow-1">
+        <h2> </h2>
+    </div>
+</div>
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <!-- Lien entourant l'image pour rediriger vers produits.html -->
+        <a href="{{ url_for('produit') }}">
+            <img src="{{ url_for('static', filename='images/click.png') }}" 
+                 alt="Let's Go Shopping" 
+                 class="center-image" 
+                 style="border-radius: 380px; box-shadow: -11px -17px 12px 10px rgba(0, 0, 0, 0.2);">
+        </a>
+    </div>
+    <!-- Bouton pour ouvrir/fermer la sidebar -->
+    <button class="btn btn-secondary toggle-btn" id="toggle-btn">
+        <i class="fas fa-bars"></i>
+    </button>
+<!-- Image Upload Form -->
+<div class="container mt-5">
+    <h1>Upload an Image to Find Similar Images</h1>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*">
+        <button type="submit" class="btn btn-primary mt-3">Upload</button>
+    </form>
+
+    {% if uploaded_image %}
+        <h2 class="mt-5">Uploaded Image:</h2>
+        <img src="{{ url_for('static', filename='uploaded_images/' + uploaded_image) }}" width="300">
+
+        <h2 class="mt-4">Images Similaires :</h2>
+        <div class="horizontal-table">
+            {% for image, score in similar_images %}
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/' + image) }}" alt="Image similaire">
+                <div class="similarity-score">{{ "%.2f" | format(score) }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        
+</table>
+
+    {% endif %}
+</div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // JavaScript to toggle the sidebar
+        const toggleBtn = document.getElementById('toggle-btn');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

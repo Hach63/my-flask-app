@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produits - CLICK SHOP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/premium-photo/abstract-graphic-design-featuring-shopping-icons-geometric-shapes_1305385-18135.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: rgb(9, 9, 9);
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #ec9090;
+            text-align: center;
+            font-weight: bold;
+        }
+        .card {
+            border: none;
+            border-radius: 15px; /* Bords arrondis pour la carte */
+            overflow: hidden; /* Pour masquer les débordements */
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: rgba(255, 255, 255, 0.9); /* Fond légèrement opaque */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+        }
+        .card-img-top {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0; /* Bord arrondi pour l'image */
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-align: center;
+        }
+        .card-body {
+            position: relative;
+            padding: 15px;
+        }
+        .card.show-overlay .overlay {
+            opacity: 1;
+        }
+        .btn-primary {
+            background-color: #ec9090;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #d98181;
+        }
+        .product-card {
+            position: relative;
+            margin-bottom: 30px; /* Espace entre les cartes */
+        }
+        .star-rating {
+            display: inline-block;
+            direction: rtl; /* Pour afficher les étoiles de droite à gauche */
+        }
+        .star-rating input {
+            display: none; /* Masquer les cases à cocher */
+        }
+        .star-rating label {
+            font-size: 30px; /* Taille des étoiles */
+            color: #ddd; /* Couleur par défaut des étoiles */
+            cursor: pointer;
+        }
+        .star-rating input:checked ~ label {
+            color: #ffcc00; /* Couleur des étoiles sélectionnées */
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #ffcc00; /* Couleur des étoiles au survol */
+        }
+        /* Custom CSS for Navbar */
+.navbar {
+    background: linear-gradient(45deg, #141e30, #243b55); /* Gradient background */
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: background 0.4s ease-in-out;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffdd57; /* Bright yellow for the brand */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: color 0.4s ease-in-out;
+}
+
+.navbar-brand:hover {
+    color: #ffeaa7; /* Slightly lighter yellow on hover */
+}
+
+.navbar-nav .nav-link {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #ecf0f1; /* Light gray for the nav links */
+    margin-left: 1rem;
+    transition: color 0.3s ease-in-out, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.navbar-nav .nav-link:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: -100%;
+    background-color: #ffdd57;
+    transition: left 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover:before {
+    left: 0;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffdd57; /* Hover color for links */
+    transform: translateY(-3px); /* Small upward animation on hover */
+}
+
+.navbar-toggler {
+    border-color: #ffdd57; /* Yellow for the border of toggler */
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-toggler:hover {
+    transform: rotate(90deg); /* Rotate on hover */
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28%255%2C%2090%2C%20255%2C%201%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Smooth Scrolling Effect */
+.navbar-nav .nav-item {
+    transition: opacity 0.5s ease-in-out, transform 0.5s;
+    transform: translateY(20px);
+}
+
+.navbar-nav .nav-item:hover {
+    opacity: 1;
+    transform: translateY(0); /* Smooth bounce effect */
+}
+/* Zoom description */
+.zoom-description {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    text-align: center;
+    pointer-events: none; /* Désactiver les interactions de la souris */
+    opacity: 0; /* Initialement caché */
+    z-index: 10;
+}
+
+.card:hover .zoom-description {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-tshirt"></i> CLICK SHOP
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home"></i> Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/produit">
+                            <i class="fas fa-shopping-bag"></i> Produits
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/contact">
+                            <i class="fas fa-envelope"></i> Contact
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/panier" id="cart-link">
+                            <i class="fas fa-shopping-cart"></i> 
+                            Panier (<span id="cart-count">0</span>)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+
+    <div class="container mt-5 pt-5">
+        <h1>Nos Produits</h1>
+
+        <!-- Boutons de filtre -->
+        <div class="btn-group mt-3 d-flex justify-content-center" role="group" aria-label="Filtres de catégorie">
+            <button type="button" class="btn btn-info mx-2" onclick="filterProducts('all')">
+                <i class="fas fa-th-large"></i> Tous
+            </button>
+            <button type="button" class="btn btn-primary mx-2" onclick="filterProducts('homme')">
+                <i class="fas fa-male"></i> Homme
+            </button>
+            <button type="button" class="btn btn-danger mx-2" onclick="filterProducts('femme')">
+                <i class="fas fa-female"></i> Femme
+            </button>
+        </div>
+
+        <div class="row mt-4" id="product-list">
+            {% for produit in produits %}
+            <div class="col-md-4 product-card" data-category="{{ produit.categorie }}">
+                <div class="card mb-4 position-relative">
+                    <img src="{{ produit.image }}" class="card-img-top" alt="{{ produit.nom }}" onclick="showImageModal('{{ produit.image }}')">
+                    <div class="overlay">
+                        <p>Description de {{ produit.nom }}<br>Prix: {{ produit.prix }} DT</p>
+                        <p>Description de la texture: {{ produit.description_texture }}</p>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ produit.nom }}</h5>
+                        <p class="card-text">{{ produit.prix }} DT</p>
+                        <label>Évaluation</label>
+                        <div class="star-rating">
+                            <input type="radio" id="star5{{ produit.id }}" name="rating{{ produit.id }}" value="5">
+                            <label for="star5{{ produit.id }}">★</label>
+                            <input type="radio" id="star4{{ produit.id }}" name="rating{{ produit.id }}" value="4">
+                            <label for="star4{{ produit.id }}">★</label>
+                            <input type="radio" id="star3{{ produit.id }}" name="rating{{ produit.id }}" value="3">
+                            <label for="star3{{ produit.id }}">★</label>
+                            <input type="radio" id="star2{{ produit.id }}" name="rating{{ produit.id }}" value="2">
+                            <label for="star2{{ produit.id }}">★</label>
+                            <input type="radio" id="star1{{ produit.id }}" name="rating{{ produit.id }}" value="1">
+                            <label for="star1{{ produit.id }}">★</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="sizeSelect{{ produit.id }}">Taille</label>
+                            <select class="form-control" id="sizeSelect{{ produit.id }}">
+                                <option value="" disabled selected>Sélectionnez une taille</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
+                        </div>
+                        <div class="zoom-description">
+                            <p>Description de {{ produit.nom }}<br>Texture : {{ produit.description_texture }}</p>
+                        </div>
+                        
+                        <a href="#" class="btn btn-primary" onclick="addToCart('{{ produit.nom }}', '{{ produit.prix }}', '{{ produit.image }}', '{{ produit.id }}')">Ajouter au panier</a>
+
+                    </div>
+                    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal pour afficher l'image en plein écran -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Aperçu de l'image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img id="modalImage" src="" class="img-fluid" alt="Image produit">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterProducts(category) {
+            const products = document.querySelectorAll('.product-card');
+            products.forEach(product => {
+                if (category === 'all' || product.getAttribute('data-category') === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        function showImageModal(imageSrc) {
+            document.getElementById('modalImage').src = imageSrc;
+            $('#imageModal').modal('show');
+        }
+        
+        function addToCart(nom, prix, image, taille) {
+            
+            fetch('/ajouter_au_panier', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nom: nom, prix: prix, image: image, taille: taille }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Produit ajouté au panier !');
+                    document.getElementById('cart-count').textContent = data.cart_count;
+                } else {
+                    alert('Erreur lors de l\'ajout au panier.');
+                }
+            });
+        }
+    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

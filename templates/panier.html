@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier - CLICK SHOP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">           
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/premium-photo/abstract-graphic-design-featuring-shopping-icons-geometric-shapes_1305385-18135.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: rgb(19, 17, 17);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            margin-top: 20px;
+            text-align: center;
+            color: #ec9090;
+        }
+        .cart-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .cart-item img {
+            width: 50px;
+            height: auto;
+            margin-right: 15px;
+        }
+        .cart-item div {
+            flex-grow: 1;
+        }
+        /* Custom CSS for Navbar */
+        .navbar {
+            background: linear-gradient(45deg, #141e30, #243b55);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.4s ease-in-out;
+        }
+        .navbar-brand {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffdd57;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.4s ease-in-out;
+        }
+        .navbar-brand:hover {
+            color: #ffeaa7;
+        }
+        .navbar-nav .nav-link {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #ecf0f1;
+            margin-left: 1rem;
+            transition: color 0.3s ease-in-out, transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .navbar-nav .nav-link:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: -100%;
+            background-color: #ffdd57;
+            transition: left 0.3s ease-in-out;
+        }
+        .navbar-nav .nav-link:hover:before {
+            left: 0;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ffdd57;
+            transform: translateY(-3px);
+        }
+        .navbar-toggler {
+            border-color: #ffdd57;
+            border-radius: 50%;
+            transition: transform 0.3s ease-in-out;
+        }
+        .navbar-toggler:hover {
+            transform: rotate(90deg);
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28%255%2C%2090%2C%20255%2C%201%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-tshirt"></i> CLICK SHOP
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home"></i> Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/produit">
+                            <i class="fas fa-shopping-bag"></i> Produits
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">
+                            <i class="fas fa-envelope"></i> Contact
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/panier" id="cart-link">
+                            <i class="fas fa-shopping-cart"></i> 
+                            Panier (<span id="cart-count">0</span>)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-5 pt-5">
+        <h1>Votre Panier</h1>
+        <div class="cart-container mt-4">
+            <div id="cart-items">
+                {% if articles %}
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Nom</th>
+                                <th>Prix (DT)</th>
+                                <th>Taille</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for article in articles %}
+                            <tr>
+                                <td><img src="{{ article.image }}" alt="{{ article.nom }}" style="width: 50px;"></td>
+                                <td>{{ article.nom }}</td>
+                                <td>{{ article.prix }} DT</td>
+                                <td>{{ article.taille }}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="removeItem('{{ article.nom }}')">Retirer</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Votre panier est vide.</p>
+                {% endif %}
+            </div>
+
+            <!-- Formulaire pour les coordonnées du client -->
+            <h3>Coordonnées du Client</h3>
+            <form id="client-info-form" class="mt-4" method="post">
+                <div class="form-group">
+                    <label for="client-name">Nom :</label>
+                    <input type="text" class="form-control" id="client-name" name="client_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="client-email">Email :</label>
+                    <input type="email" class="form-control" id="client-email" name="client_email" required>
+                </div>
+                <div class="form-group">
+                    <label for="client-phone">Téléphone :</label>
+                    <input type="text" class="form-control" id="client-phone" name="client_phone" required>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Enregistrer les coordonnées</button>
+            </form>
+
+            <!-- Affichage des coordonnées du client si elles existent -->
+            {% if client_info %}
+                <div class="mt-4">
+                    <h4>Coordonnées du Client :</h4>
+                    <p><strong>Nom :</strong> {{ client_info.name }}</p>
+                    <p><strong>Email :</strong> {{ client_info.email }}</p>
+                    <p><strong>Téléphone :</strong> {{ client_info.phone }}</p>
+                </div>
+            {% endif %}
+
+            <a href="/" class="btn btn-secondary mt-3">Continuer vos achats</a>
+        </div>
+    </div>
+
+    <script>
+        function removeItem(nom) {
+            fetch('/retirer_du_panier', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nom: nom }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Produit retiré du panier !');
+                    location.reload();  // Recharger la page pour mettre à jour le panier
+                } else {
+                    alert('Erreur lors du retrait du produit.');
+                }
+            });
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

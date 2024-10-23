@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - CLICK SHOP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/premium-photo/abstract-graphic-design-featuring-shopping-icons-geometric-shapes_1305385-18135.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: rgb(23, 21, 21);
+        }
+        .container {
+            margin-top: 100px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        /* Custom CSS for Navbar */
+.navbar {
+    background: linear-gradient(45deg, #141e30, #243b55); /* Gradient background */
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: background 0.4s ease-in-out;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffdd57; /* Bright yellow for the brand */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: color 0.4s ease-in-out;
+}
+
+.navbar-brand:hover {
+    color: #ffeaa7; /* Slightly lighter yellow on hover */
+}
+
+.navbar-nav .nav-link {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #ecf0f1; /* Light gray for the nav links */
+    margin-left: 1rem;
+    transition: color 0.3s ease-in-out, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.navbar-nav .nav-link:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: -100%;
+    background-color: #ffdd57;
+    transition: left 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover:before {
+    left: 0;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffdd57; /* Hover color for links */
+    transform: translateY(-3px); /* Small upward animation on hover */
+}
+
+.navbar-toggler {
+    border-color: #ffdd57; /* Yellow for the border of toggler */
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-toggler:hover {
+    transform: rotate(90deg); /* Rotate on hover */
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28%255%2C%2090%2C%20255%2C%201%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Smooth Scrolling Effect */
+.navbar-nav .nav-item {
+    transition: opacity 0.5s ease-in-out, transform 0.5s;
+    transform: translateY(20px);
+}
+
+.navbar-nav .nav-item:hover {
+    opacity: 1;
+    transform: translateY(0); /* Smooth bounce effect */
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-tshirt"></i> CLICK SHOP
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home"></i> Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/produit">
+                            <i class="fas fa-shopping-bag"></i> Produits
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/contact">
+                            <i class="fas fa-envelope"></i> Contact
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/panier" id="cart-link">
+                            <i class="fas fa-shopping-cart"></i> 
+                            Panier (<span id="cart-count">0</span>)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+
+    <div class="container">
+        <h1>Contactez-nous</h1>
+        <form method="POST" action="/contact">
+            <div class="form-group">
+                <label for="name">Nom</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Votre nom" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Votre email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Votre message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
+</body>
+</html>
