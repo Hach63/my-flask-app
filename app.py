@@ -11,8 +11,8 @@ app = Flask(__name__)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'hachmibarhoumi52@gmail.com'  # Remplacez par votre adresse e-mail
-app.config['MAIL_PASSWORD'] = 'cocg wnzt jqlh htem'  # Remplacez par votre mot de passe
+app.config['MAIL_USERNAME'] = 'YOUR_@'  # Remplacez par votre adresse e-mail
+app.config['MAIL_PASSWORD'] = 'YOUR_PWD'  # Remplacez par votre mot de passe
 app.config['MAIL_DEFAULT_SENDER'] = 'vdk@gmail.com'
 app.secret_key = 'a_123456789'
 
@@ -171,7 +171,7 @@ def contact():
 
         try:
             msg = Message(subject=f'Nouveau message de {name}',
-                          recipients=['hachmibarhoumi52@gmail.com'],
+                          recipients=['YOUR_@'],
                           body=f'Nom: {name}\nEmail: {email}\n\nMessage:\n{message}')
             
             mail.send(msg)
